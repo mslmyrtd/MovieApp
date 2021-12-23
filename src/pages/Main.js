@@ -15,7 +15,7 @@ const Main = () => {
       .then((res) => setMovies(res.results));
   };
   return (
-    <div>
+    <div className="movie-container">
       {movies.map((movie) => (
         <MovieCard key={movie.id} {...movie} />
       ))}
