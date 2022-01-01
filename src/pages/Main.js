@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react/cjs/react.development";
+import { AuthContext } from "../context/AuthContext";
 import MovieCard from "../components/MovieCard";
 
 const FEATURED_API =
@@ -9,7 +11,7 @@ const SEARCH_API =
 const Main = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const { currentUser } = useContext(AuthContext);
   useEffect(() => {
     getMovies(FEATURED_API);
   }, []);
@@ -22,8 +24,10 @@ const Main = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchTerm) {
+    if (searchTerm && currentUser) {
       getMovies(SEARCH_API + searchTerm);
+    } else {
+      alert("Please log in to search a movie");
     }
     setSearchTerm("");
   };
